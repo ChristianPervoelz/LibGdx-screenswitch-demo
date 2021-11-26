@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+project.ext.mainClassName = "de.pg.screen2d.screenswitch.demo.Demo"
+project.ext.assetsDir = new File("./src/main/assets")
+
+ext {
+    gdxVersion = '1.10.0'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+    implementation  "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    implementation 'com.github.ChristianPervoelz:LibGDX-ScreenSwitch:1.0.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task run(dependsOn: classes, type: JavaExec) {
+    main(project.mainClassName)
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    workingDir = project.assetsDir
+    ignoreExitValue = true
+}
